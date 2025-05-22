@@ -1,0 +1,17 @@
+# Core dependencies
+numpy
+pandas
+opencv-python
+scikit-learn
+
+# Deep learning (if needed)
+torch
+torchvision
+
+# Visualization
+matplotlib
+
+# Utilities
+tqdm
+
+# Add other dependencies as needed
