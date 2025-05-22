@@ -1,4 +1,4 @@
-def reaf_file_to_string(filepath):
+def read_file_to_string(filepath):
     """
     Read a file and return its content as a string.
     
