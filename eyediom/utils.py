@@ -2,7 +2,7 @@
 
 import numpy as np
 
-def scale_eye_data(eye_data, image_shape, offsey_x=0,offset_y=0, scale_y_factor=1.0):
+def scale_eye_data(eye_data, image_shape, offset_x=0,offset_y=0, scale_y_factor=1.0):
    
     scaled_data = np.copy(eye_data) # Cria uma cópia para não modificar o array original
 
@@ -15,7 +15,7 @@ def scale_eye_data(eye_data, image_shape, offsey_x=0,offset_y=0, scale_y_factor=
     scaled_data[:, 1] = scaled_data[:, 1] * image_shape[0] * scale_y_factor
 
     # Aplica o offset 
-    scale_eye_data[:, 0] += offsey_x
+    scale_eye_data[:, 0] += offset_x
     scaled_data[:, 1] += offset_y
 
     return scaled_data
