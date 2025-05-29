@@ -13,5 +13,6 @@ matplotlib
 
 # Utilities
 tqdm
+pytesseract 
 
 # Add other dependencies as needed
