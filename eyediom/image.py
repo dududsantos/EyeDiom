@@ -10,27 +10,34 @@ def load_image(image_path):
     return mpimg.imread(image_path)
 
 #Detecta a palavra na imagem e retorna seu bounding box e txto
-def find_word_bounding_boxes(image_path):
+def find_word_bounding_boxes(image):
     
-    if isinstance(image_path, str):
-        img = cv2.imread(image_path)
+    img_to_process = None
     
-    if img is None:
-        print("Invalid image path or image data.")
-        return []
+    if isinstance(image, str):
+        img_to_process = cv2.imread(image)
     
+        if img_to_process is None:
+            print("Invalid image path or image data.")
+            return []
+    
+    elif isinstance(image, np.ndarray):
+        img_to_process = image
+   
     else: #tratar caso seja rgba / tirar um canal
-        if image_path.ndim ==3 and image_path.shape[2] == 4:
-            img = image_path[:, :, :3]  # Remove alpha channel if present
-        else:
-            img = image_path
+       print("Unsupported image format. Please provide a valid image path or a NumPy array.")
+       return []
             
             
     #Converter para escala de cinza p/ melhorar o OCR
-    if img.ndim == 3:
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+   
+    if img_to_process.ndim ==3 and img_to_process.shape[2] == 4:
+        img_to_process = img_to_process[:, :, :3]  # Remove alpha channel if present
+    
+    if img_to_process.ndim == 3 and img_to_process.shape[2] == 3: # Verifica se é uma imagem colorida (3 
+        gray = cv2.cvtColor(img_to_process, cv2.COLOR_BGR2GRAY) 
     else:
-        gray = img
+        gray = img_to_process
         
     #Usar o tesseract para obter os boxes
      # output_type=Output.DICT retorna um dicionário com info detalhada (texto, bbox, conf, etc.)
