@@ -30,6 +30,15 @@ def find_word_bounding_boxes(image):
        return []
             
             
+    if img_to_process.dtype != np.uint8:
+        # Primeiro, garantir que está na escala de 0-1 antes de multiplicar por 255
+        # Alguns dtypes float já podem vir de 0-255, mas a maioria virá de 0-1.
+        # Para ser seguro, reescalamos antes da conversão para uint8
+        if np.max(img_to_process) <= 1.0: # Se os valores estão normalizados para 0-1
+             img_to_process = (img_to_process * 255).astype(np.uint8)
+        else: # Se os valores já estão entre 0-255 (mas não são uint8)
+            img_to_process = img_to_process.astype(np.uint8)
+            
     #Converter para escala de cinza p/ melhorar o OCR
    
     if img_to_process.ndim ==3 and img_to_process.shape[2] == 4:
