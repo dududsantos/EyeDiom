@@ -1,6 +1,7 @@
 import matplotlib.image as mpimg
 import cv2
 import pytesseract
+import numpy as np
 
 def load_image(image_path):
     """
@@ -43,6 +44,8 @@ def find_word_bounding_boxes(image):
      # output_type=Output.DICT retorna um dicionário com info detalhada (texto, bbox, conf, etc.)
     # config='--psm 6' é um Page Segmentation Mode comum para uma única linha uniforme de texto.
     # Outros PSMs podem ser explorados dependendo da sua imagem (e.g., --psm 3 para página padrão)
+    print("INFO: Iniciando processamento OCR com Tesseract...")
+    
     try:
         data = pytesseract.image_to_data(gray, output_type=pytesseract.Output.DICT, config='--psm 6')
     except pytesseract.TesseractError as e:
