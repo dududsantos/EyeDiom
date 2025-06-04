@@ -4,13 +4,10 @@ import pytesseract
 import numpy as np
 
 def load_image(image_path):
-    """
-    Load an image from a given path as a NumPy array.
-       
-    """
+  
     return mpimg.imread(image_path)
 
-#Detecta a palavra na imagem e retorna seu bounding box e txto
+
 def find_word_bounding_boxes(image):
     
     img_to_process = None
@@ -31,12 +28,10 @@ def find_word_bounding_boxes(image):
             
             
     if img_to_process.dtype != np.uint8:
-        # Primeiro, garantir que está na escala de 0-1 antes de multiplicar por 255
-        # Alguns dtypes float já podem vir de 0-255, mas a maioria virá de 0-1.
-        # Para ser seguro, reescalamos antes da conversão para uint8
-        if np.max(img_to_process) <= 1.0: # Se os valores estão normalizados para 0-1
+        # Se a imagem não for do tipo uint8, converte para uint8
+        if np.max(img_to_process) <= 1.0:
              img_to_process = (img_to_process * 255).astype(np.uint8)
-        else: # Se os valores já estão entre 0-255 (mas não são uint8)
+        else: 
             img_to_process = img_to_process.astype(np.uint8)
             
     #Converter para escala de cinza p/ melhorar o OCR
@@ -50,7 +45,6 @@ def find_word_bounding_boxes(image):
         gray = img_to_process
         
     #Usar o tesseract para obter os boxes
-     # output_type=Output.DICT retorna um dicionário com info detalhada (texto, bbox, conf, etc.)
     # config='--psm 6' é um Page Segmentation Mode comum para uma única linha uniforme de texto.
     # Outros PSMs podem ser explorados dependendo da sua imagem (e.g., --psm 3 para página padrão)
     print("INFO: Iniciando processamento OCR com Tesseract...")

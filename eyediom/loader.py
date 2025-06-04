@@ -1,4 +1,5 @@
 import os
+from .image import load_image, find_word_bounding_boxes
 
 def load_expressions_and_sentences(base_path):
     """
@@ -19,21 +20,22 @@ def load_expressions_and_sentences(base_path):
         if not os.path.isdir(expression_path):
             continue
 
-        sentences = []
-        image_paths = []
-
+        phrases_in_expression = []
+        
         for filename in sorted(os.listdir(expression_path)):
             if filename.endswith(".png"):
                 sentence_text = os.path.splitext(filename)[0]
                 image_path = os.path.join(expression_path, filename)
+                
+                word_bboxes = find_word_bounding_boxes(image_path)
 
-                sentences.append(sentence_text)
-                image_paths.append(image_path)
+                phrases_in_expression.append({
+                "sentences": sentence_text,
+                "image_paths": image_path,
+                "word_bboxes": word_bboxes
+            })
 
-        if sentences:
-            expression_data[expression] = {
-                "sentences": sentences,
-                "image_paths": image_paths
-            }
-
+        if phrases_in_expression:
+            expression_data[expression] = phrases_in_expression
+    
     return expression_data
