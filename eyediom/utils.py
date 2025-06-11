@@ -1,4 +1,4 @@
-# Em EyeDiom/utils.py (VERSÃO FINAL SIMPLIFICADA)
+
 
 import numpy as np
 
