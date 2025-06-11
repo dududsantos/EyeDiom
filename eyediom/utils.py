@@ -20,7 +20,7 @@ def scale_eye_data(eye_data, image_shape, offset_x=0,offset_y=0, scale_y_factor=
 
     return scaled_data
 
-def map_eye_to_word (gaze_x_pixel, haze_y_pixel, word_bboxes):
+def map_eye_to_word (gaze_x_pixel, gaze_y_pixel, word_bboxes):
    
    for word_bbox in word_bboxes:
         bbox = word_bbox['bbox']
@@ -31,7 +31,7 @@ def map_eye_to_word (gaze_x_pixel, haze_y_pixel, word_bboxes):
         y_max = y_min + height
         
         # Verifica se o ponto de gaze está dentro do bounding box da palavra
-        if x_min <= gaze_x_pixel <= x_max and y_min <= haze_y_pixel <= y_max:
+        if x_min <= gaze_x_pixel <= x_max and y_min <= gaze_y_pixel <= y_max:
             # Calcula a posição relativa dentro da palavra (de 0.0 a 1.0)
             if width>0:
                 relative_x = (gaze_x_pixel - x_min) / width
@@ -39,3 +39,5 @@ def map_eye_to_word (gaze_x_pixel, haze_y_pixel, word_bboxes):
                 relative_x = 0.0
                 
             return word_text, relative_x
+        
+        return None, None
