@@ -40,4 +40,4 @@ def map_eye_to_word (gaze_x_pixel, gaze_y_pixel, word_bboxes):
                 
             return word_text, relative_x
         
-        return None, None
+   return None, None
